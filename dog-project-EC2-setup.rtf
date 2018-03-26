@@ -1,0 +1,59 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww25400\viewh27380\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs40 \cf0 # Steps to provision EC2 instance\
+# Region N. Virginia\
+# Instance Type: p2.xlarge\
+\
+# Steps to ssh into instance\
+ssh -i ~/.ssh/sym-ml.pem ubuntu@PUBLIC_IP\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+# Steps to install code on EC2 instance\
+\
+# Clone Git repo\
+# starting working directory: /home/ubuntu\
+git clone https://github.com/udacity/dog-project.git\
+cd dog-project\
+\
+# Download data\
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip\
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip\
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/DogVGG16Data.npz\
+\
+# Unzipping content\
+unzip dogImages.zip\
+unzip lfw.zip\
+mv DogVGG16Data.npz bottleneck_features\
+\
+# Install Tensorflow\
+sudo python3 -m pip install -r requirements/requirements-gpu.txt\
+\
+# \
+KERAS_BACKEND=tensorflow python -c "from keras import backend\
+\
+# Install a python library\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf0 sudo python -m pip install tqdm\
+\
+# Download data for VGG19 network\
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/DogVGG19Data.npz\
+mv DogVGG19Data.npz /home/ubuntu/dog-project/bottleneck_features\
+\
+# Download data for Resnet50 network\
+wget https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/DogResnet50Data.npz\
+mv DogResnet50Data.npz /home/ubuntu/dog-project/bottleneck_features\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+# Starting the jupyter notebook on the EC2 instances\
+# Copy & paste the URL into the browser:\
+# :8888/?token=<TOKEN>\
+jupyter notebook --ip=0.0.0.0 --no-browser\
+\
+# In your browser go to \
+PUBLIC_IP:8888/?token=<TOKEN>}
