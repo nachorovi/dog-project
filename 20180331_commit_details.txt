@@ -1,0 +1,42 @@
+
+I tried the other face_detector in OpenCV that uses deep learning but it throws an error. Any pointer is appreciated.
+
+I added the early termination when the validation set loss stops decreasing after successive runs. That was nice, thanks!
+
+I added the BatchNormalization. I'm not sure if I am doing it right as I am not seeing an improvement both in speed to train or in accuracy. Am I doing something wrong?
+
+I changed the optimization function from 'rmsprop' to 'adam' without any perceibable improvement. Am I doing something wrong?
+
+I tried all four models. They are roughly around the same accuracy 79 to 85%. The VGG19 did a lot better with the second fully connected layer and the high dropout layer.
+It might make sense to use the Xception model instead of the ResNet50.
+
+I also tried improving my own model without success as the accuracy is still 17%:
+- Reduced convolution window from 4 to 3
+- Added BatchNormalization
+- Added another fully connected layer
+- Added Dropout layer
+- I changed the optimization function from 'rmsprop' to 'adam' without any perceibable improvement. Am I doing something wrong?
+
+In the post https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html it says:
+The reason why we are storing the features offline rather than adding our fully-connected model directly on top of a frozen convolutional base and running the whole thing, is computational effiency. Running VGG16 is expensive, especially if you're working on CPU, and we want to only do it once. Note that this prevents us from using data augmentation.
+Why can't we use data augmentation?
+
+Added data augmentation to my model. Increased Test accuracy from 17% to 32%. Train time per epoch went up from ~20s to ~50s.
+Later updating the convolutional layers kernel_size from 2 to 3, increased the accuracy from 32% to 45%.
+
+Updated my algorith to also show the probability of the predicted dog breed.
+
+Updated my algorith to also show an image of the resembling dog breed (only for humans).
+
+
+TO TRY:
+- Remove one convolutional network
+- Have 2 convnet then MaxPooling layer
+- Reduce number of filters for ConvNet
+
+TODO:
+- Create bottleneck features myself
+- Read on CNN architectures
+- Kaggle competitions:
+  - https://www.kaggle.com/c/dog-breed-identification
+  - https://www.kaggle.com/c/plant-seedlings-classification
